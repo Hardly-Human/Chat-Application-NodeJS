@@ -1,0 +1,21 @@
+.container {
+	height: 100vh;
+	display: block;
+}
+
+.container-title,
+.container-form {
+	display: flex;
+	height: 10vh;
+	width: 90vw;
+	align-items: center;
+	justify-content: center;
+}
+
+.container-title {
+	margin-top: 50px;
+}
+
+.container-form {
+	margin-top: 20px;
+}

@@ -12,8 +12,13 @@ const PORT = process.env.PORT || 3000;
 const publicDirPath = path.join(__dirname, "./public");
 app.use(express.static(publicDirPath));
 
-io.on("connection", () => {
+io.on("connection", (socket) => {
 	console.log("New web socket connection");
+	socket.emit("WelcomeMessage", "Welcome!");
+
+	socket.on("message", (message) => {
+		io.emit("messageUpdated", message);
+	});
 });
 
 server.listen(PORT, () => console.log("Server running on port :", PORT));
