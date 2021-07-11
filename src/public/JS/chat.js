@@ -8,8 +8,11 @@ document.getElementById("form").addEventListener("submit", (event) => {
 	event.preventDefault();
 
 	const message = event.target.elements.message.value;
-	socket.emit("sendMessage", message, () => {
-		console.log("The Message was Delivered!");
+	socket.emit("sendMessage", message, (error) => {
+		if (error) {
+			return console.log(error);
+		}
+		return console.log("The Message was Delivered!");
 	});
 });
 
