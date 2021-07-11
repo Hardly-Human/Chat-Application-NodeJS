@@ -12,12 +12,32 @@ const PORT = process.env.PORT || 3000;
 const publicDirPath = path.join(__dirname, "./public");
 app.use(express.static(publicDirPath));
 
+// server [emit] => client [recieve] => acknowledgement => server
+
+// client [emit] => server [recieve] => acknowledgement => client
+
 io.on("connection", (socket) => {
 	console.log("New web socket connection");
-	socket.emit("WelcomeMessage", "Welcome!");
+	socket.emit("message", "Welcome!");
+	socket.broadcast.emit("message", "A user has Joined!");
 
-	socket.on("message", (message) => {
-		io.emit("messageUpdated", message);
+	socket.on("sendMessage", (message, callback) => {
+		io.emit("message", message);
+
+		callback(); // acknowledgement function
+	});
+
+	socket.on("sendLocation", (data, callback) => {
+		io.emit(
+			"message",
+			`https://google.com/maps?q=${data.lat},${data.long}`
+		);
+
+		callback(); //acknowledgement Function
+	});
+
+	socket.on("disconnect", () => {
+		io.emit("message", "A user has left");
 	});
 });
 

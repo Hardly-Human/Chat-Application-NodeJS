@@ -4,7 +4,8 @@
 }
 
 .container-title,
-.container-form {
+.container-form,
+.location-btn {
 	display: flex;
 	height: 10vh;
 	width: 90vw;
